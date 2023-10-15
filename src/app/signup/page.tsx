@@ -4,6 +4,7 @@ import { Button, Col, Input, Row } from "antd";
 import { SubmitHandler } from "react-hook-form";
 import Form from "../components/Forms/form";
 import FormInput from "../components/Forms/FormInput";
+import Link from "next/link";
 
 type FormValues = {
   name: string;
@@ -61,12 +62,12 @@ const SignupPage = () => {
               </Form>
               <p className="mt-2 mb-4 text-center text-sm text-gray-600 max-w">
                 Already have an Account?
-                <a
+                <Link
                   href="/signin"
                   className="mx-2 font-medium text-blue-600 hover:text-blue-500"
                 >
                   Sign in
-                </a>
+                </Link>
               </p>
             </div>
           </div>

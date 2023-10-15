@@ -5,11 +5,12 @@ import { Layout, Menu } from "antd";
 
 import { USER_ROLE } from "@/constants/role";
 import { sidebarItems } from "@/constants/sidebarItems";
+import { getUserInfo } from "@/services/auth.services";
 const { Sider } = Layout;
 
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const role = USER_ROLE.CUSTOMER;
+  const { role } = getUserInfo() as any;
   return (
     <Sider
       collapsible
