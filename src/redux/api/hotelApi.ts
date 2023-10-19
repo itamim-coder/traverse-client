@@ -1,9 +1,16 @@
 import { baseApi } from "./baseApi";
 
-
 const HOTEL_URL = "/hotel";
 export const hotelApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
+    createHotel: build.mutation({
+      query: (data) => ({
+        url: `${HOTEL_URL}`,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: ["createHotel"],
+    }),
     getHotels: build.query({
       query: () => ({
         url: `${HOTEL_URL}`,
@@ -21,4 +28,8 @@ export const hotelApi = baseApi.injectEndpoints({
   }),
 });
 
-export const {useGetHotelsQuery, useHotelDetailsQuery } = hotelApi;
+export const {
+  useGetHotelsQuery,
+  useHotelDetailsQuery,
+  useCreateHotelMutation,
+} = hotelApi;

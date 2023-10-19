@@ -32,7 +32,9 @@ export default function NavBar() {
     <Navbar>
       <NavbarBrand>
         {/* <AcmeLogo /> */}
-        <p className="font-bold text-inherit">TRAVERSE</p>
+        <Link href="/">
+          <p className="font-bold text-black text-inherit">TRAVERSE</p>
+        </Link>
       </NavbarBrand>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">

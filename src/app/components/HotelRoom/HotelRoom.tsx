@@ -5,7 +5,7 @@ import {
 import { useAppSelector } from "@/redux/hooks";
 import React, { useState } from "react";
 
-const Room = ({ params }: any) => {
+const HotelRoom = ({ params }: any) => {
   const [selectedRooms, setSelectedRooms] = useState([]);
 
   const { data: roomData, isLoading: loading } = useGetSingleRoomQuery(
@@ -36,14 +36,14 @@ const Room = ({ params }: any) => {
   const alldates = getDatesInRange(dates[0]?.startDate, dates[0]?.endDate);
   console.log(alldates);
 
-//   const isAvailable = (roomNumber: { unavailableDates: any[] }) => {
-//     const isFound = roomNumber?.unavailableDates?.some(
-//       (date: string | number | Date) =>
-//         alldates.includes(new Date(date).getTime())
-//     );
-// console.log(isFound)
-//     return !isFound;
-//   };
+  //   const isAvailable = (roomNumber: { unavailableDates: any[] }) => {
+  //     const isFound = roomNumber?.unavailableDates?.some(
+  //       (date: string | number | Date) =>
+  //         alldates.includes(new Date(date).getTime())
+  //     );
+  // console.log(isFound)
+  //     return !isFound;
+  //   };
   const isAvailable = (roomNumber: { unavailableDates: any[] }) => {
     return alldates?.every((date) => {
       const dateToCheck = new Date(date).getTime();
@@ -67,50 +67,69 @@ const Room = ({ params }: any) => {
     try {
       await Promise.all(
         selectedRooms.map(async (roomId) => {
-          const unavailableDates = alldates.map((date) => new Date(date).toISOString());
+          const unavailableDates = alldates.map((date) =>
+            new Date(date).toISOString()
+          );
 
           const roomData = {
             unavailableDates, // Add the unavailableDates property
           };
-  
+
           const updatedData = await reserveAroom({ id: roomId, roomData });
           console.log(updatedData);
           // const res = axios.put(`/rooms/availability/${roomId}`, {
           //   dates: alldates,
           // });
-         
+
           // return res.data;
         })
       );
-   
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
   return (
     <div>
-      <h1>hello</h1>
       {roomData?.RoomNumber?.map((rd: any) => (
-        <>
-          {console.log(rd)}
-          <h1>Room No : {rd?.number}</h1>
-          <label>{rd?.number}</label>
-          <input
-            type="checkbox"
-            value={rd?.id}
-            onChange={handleSelect}
-            disabled={!isAvailable(rd)}
-          />
-        </>
+        <div
+          key={rd.id}
+          className="border p-4 my-2 flex items-center justify-between"
+        >
+          <div>
+            <h1 className="text-2xl font-bold">Room No: {rd.number}</h1>
+            <label className="block text-gray-500">Price: $XXX</label>{" "}
+            {/* Replace with the actual price */}
+            <label className="block text-gray-500">
+              Availability: {isAvailable(rd) ? "Available" : "Not Available"}
+            </label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              value={rd.id}
+              onChange={handleSelect}
+              disabled={!isAvailable(rd)}
+            />
+            <label className="text-gray-600">Select</label>
+          </div>
+        </div>
       ))}
-      <button onClick={handleClick} className="rButton">
+      <button
+        onClick={handleClick}
+        className={`w-full py-3 rounded-lg text-white ${
+          selectedRooms.length === 0
+            ? "bg-gray-300 cursor-not-allowed"
+            : "bg-blue-500 hover:bg-blue-600"
+        }`}
+        disabled={selectedRooms.length === 0}
+      >
         Reserve Now!
       </button>
     </div>
   );
 };
 
-export default Room;
+export default HotelRoom;
 function setSelectedRooms(arg0: any) {
   throw new Error("Function not implemented.");
 }

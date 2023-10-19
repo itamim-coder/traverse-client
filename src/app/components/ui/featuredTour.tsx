@@ -1,5 +1,6 @@
 "use client";
 
+import { useGetTourQuery } from "@/redux/api/tourApi";
 import {
   Table,
   TableHeader,
@@ -10,6 +11,7 @@ import {
   Button,
   Avatar,
 } from "@nextui-org/react";
+import Link from "next/link";
 import NextLink from "next/link";
 import { FaBangladeshiTakaSign, FaArrowRight } from "react-icons/fa6";
 
@@ -51,6 +53,8 @@ const rooms = [
 const price = 20000;
 //@ts-ignore
 const FeaturedTours = () => {
+  const { data: tourData, isLoading } = useGetTourQuery(undefined);
+  console.log(tourData);
   return (
     <>
       <div className="container mx-auto px-2 lg:px-20 my-10 overflow-x-hidden">
@@ -72,19 +76,33 @@ const FeaturedTours = () => {
             <TableColumn>Action</TableColumn>
           </TableHeader>
           <TableBody>
-            {rooms.map((room) => (
-              <TableRow key={room.id}>
+            {tourData?.map((tour) => (
+              <TableRow key={tour.id}>
                 <TableCell>
                   <div className="flex flex-col lg:flex-row justify-start items-center gap-10">
                     <Avatar
                       isBordered
                       radius="md"
-                      src={room.image}
+                      src={tour.images[0]}
                       className="w-80 lg:w-96 h-60 lg:h-64"
                     />
                     <div className="flex flex-col gap-4">
-                      <h2 className="text-2xl font-bold">{room.title1}</h2>
-                      <p className="text-base">{room.title2}</p>
+                      <h2 className="text-2xl font-bold">{tour.title}</h2>
+                      <p className="text-base">{tour.duration}</p>
+                      <p className="text-base">{tour.starting_date}</p>
+                      <Link href={`/tour/${tour.id}`}>
+                        <Button
+                          as={NextLink}
+                          href={`/tour/${tour.id}`}
+                          color="primary"
+                          variant="ghost"
+                          radius="full"
+                          endContent={<FaArrowRight />}
+                        >
+                          More Details
+                        </Button>
+                      </Link>
+
                       <div className="grid grid-cols-4 gap-x-4 gap-y-10 place-items-start"></div>
                       <div className="lg:hidden">
                         <div className="mb-4">
@@ -92,18 +110,28 @@ const FeaturedTours = () => {
                             <span className="mr-1.5">
                               <FaBangladeshiTakaSign />
                             </span>
-                            {price} / Per Night
+                            {tour.price} / Per Person
                           </h1>
-                          <Button
-                            as={NextLink}
-                            href="/rooms/roomdetails"
-                            color="primary"
-                            variant="ghost"
-                            radius="full"
-                            endContent={<FaArrowRight />}
-                          >
-                            More Details
-                          </Button>
+                          {tour.available ? (
+                            <>
+                              <Link href={`/tour/${tour.id}`}>
+                                <Button
+                                  as={NextLink}
+                                  href={`/tour/${tour.id}`}
+                                  color="primary"
+                                  variant="ghost"
+                                  radius="full"
+                                  endContent={<FaArrowRight />}
+                                >
+                                  More Details
+                                </Button>
+                              </Link>
+                            </>
+                          ) : (
+                            <>
+                              <h1>Booking not start yet</h1>
+                            </>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -116,19 +144,27 @@ const FeaturedTours = () => {
                         <span className="mr-1.5">
                           <FaBangladeshiTakaSign />
                         </span>
-                        {price}
+                        {tour.price}
                       </h1>
                       <h5 className="font-semibold mb-3"> / Per Night</h5>
-                      <Button
-                        as={NextLink}
-                        href="/rooms/roomdetails"
-                        color="primary"
-                        variant="ghost"
-                        radius="full"
-                        endContent={<FaArrowRight />}
-                      >
-                        More Details
-                      </Button>
+                      {tour.available ? (
+                        <>
+                          <Button
+                            as={NextLink}
+                            href="/rooms/roomdetails"
+                            color="primary"
+                            variant="ghost"
+                            radius="full"
+                            endContent={<FaArrowRight />}
+                          >
+                            ADD TO CART
+                          </Button>
+                        </>
+                      ) : (
+                        <>
+                          <h1>Booking not start yet</h1>
+                        </>
+                      )}
                     </div>
                   </div>
                 </TableCell>
