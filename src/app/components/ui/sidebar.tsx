@@ -20,7 +20,7 @@ const SideBar = () => {
       className="overflow-auto min-h-screen sticky left-0 top-0 bottom-0"
     >
       <div className="text-white text-2xl text-center font-semibold mb-4">
-        Travel Agency
+        Traverse
       </div>
       <Menu
         theme="dark"

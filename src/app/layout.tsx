@@ -21,10 +21,7 @@ export default function RootLayout({
     <Providers>
       <html lang="en">
         <body className={inter.className}>
-          <StyledComponentsRegistry>
-            <Navbar></Navbar>
-            {children}
-          </StyledComponentsRegistry>
+          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
         </body>
       </html>
     </Providers>
