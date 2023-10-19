@@ -5,11 +5,12 @@ import { Layout, Menu } from "antd";
 
 import { USER_ROLE } from "@/constants/role";
 import { sidebarItems } from "@/constants/sidebarItems";
+import { getUserInfo } from "@/services/auth.services";
 const { Sider } = Layout;
 
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const role = USER_ROLE.CUSTOMER;
+  const { role } = getUserInfo() as any;
   return (
     <Sider
       collapsible
@@ -19,7 +20,7 @@ const SideBar = () => {
       className="overflow-auto min-h-screen sticky left-0 top-0 bottom-0"
     >
       <div className="text-white text-2xl text-center font-semibold mb-4">
-        Travel Agency
+        Traverse
       </div>
       <Menu
         theme="dark"

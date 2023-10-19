@@ -2,6 +2,7 @@
 import { Layout } from "antd";
 import React from "react";
 import TABreadCrumb from "./TABreadCrumb";
+import Header from "./header";
 const { Content } = Layout;
 const Contents = ({ children }: { children: React.ReactNode }) => {
   const base = "admin";
@@ -12,6 +13,7 @@ const Contents = ({ children }: { children: React.ReactNode }) => {
         color: "black",
       }}
     >
+      <Header />
       <TABreadCrumb
         items={[
           {
