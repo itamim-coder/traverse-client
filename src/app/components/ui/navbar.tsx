@@ -75,8 +75,9 @@ export default function NavBar() {
                   <p className="font-semibold">Signed in as</p>
                   <p className="font-semibold">{email}</p>
                 </DropdownItem>
-
-                <DropdownItem key="my_profile">My Profile</DropdownItem>
+                <DropdownItem key="my_profile">
+                  <Link href="/profile">My Profile</Link>
+                </DropdownItem>
 
                 <DropdownItem key="help_and_feedback">
                   Help & Feedback
