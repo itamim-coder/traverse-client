@@ -6,6 +6,7 @@ import { Layout, Menu } from "antd";
 import { USER_ROLE } from "@/constants/role";
 import { sidebarItems } from "@/constants/sidebarItems";
 import { getUserInfo } from "@/services/auth.services";
+import Link from "next/link";
 const { Sider } = Layout;
 
 const SideBar = () => {
@@ -19,8 +20,13 @@ const SideBar = () => {
       width={280}
       className="overflow-auto min-h-screen sticky left-0 top-0 bottom-0"
     >
-      <div className="text-white text-2xl text-center font-semibold mb-4">
-        Traverse
+      <div>
+        <Link
+          href={"/"}
+          className="text-white text-2xl text-center font-semibold mb-4"
+        >
+          Traverse
+        </Link>
       </div>
       <Menu
         theme="dark"
